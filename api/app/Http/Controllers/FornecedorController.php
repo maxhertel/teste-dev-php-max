@@ -3,40 +3,37 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\FornecedorRequest;
-use App\Http\Requests\SupplierRequest;
-use App\Models\Fornecedor;
 use App\Repositories\FornecedorRepositoryInterface;
-use App\Repositories\SupplierRepositoryInterface;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Request;
 
 /**
  * @OA\Tag(
- *     name="Suppliers",
+ *     name="Fornecedores",
  *     description="Endpoints para gerenciamento de fornecedores"
  * )
  */
 class FornecedorController extends Controller
 {
     /**
-     * @var SupplierRepositoryInterface
+     * @var fornecedorRepositoryInterface
      */
-    protected $supplierRepository;
+    protected $fornecedorRepository;
 
     /**
      * Injeta a dependência do repositório.
      *
-     * @param SupplierRepositoryInterface $supplierRepository
+     * @param FornecedorRepositoryInterface $fornecedorRepository
      */
-    public function __construct(FornecedorRepositoryInterface $supplierRepository)
+    public function __construct(FornecedorRepositoryInterface $fornecedorRepository)
     {
-        $this->supplierRepository = $supplierRepository;
+        $this->fornecedorRepository = $fornecedorRepository;
     }
 
-/**
+    /**
      * Lista todos os fornecedores.
      *
      * @OA\Get(
-     *     path="/api/fornecerdor",
+     *     path="/api/fornecedor",
      *     operationId="getFornecedoresList",
      *     tags={"Fornecedores"},
      *     summary="Lista fornecedores",
@@ -55,7 +52,7 @@ class FornecedorController extends Controller
      */
     public function index()
     {
-        $suppliers = $this->supplierRepository->getAll();
+        $suppliers = $this->fornecedorRepository->getAll();
 
         return response()->json($suppliers);
     }
@@ -64,7 +61,7 @@ class FornecedorController extends Controller
      * Cadastra um novo fornecedor.
      *
      * @OA\Post(
-     *     path="/api/fornecerdor",
+     *     path="/api/fornecedor",
      *     operationId="storeFornecedor",
      *     tags={"Fornecedores"},
      *     summary="Cadastra fornecedor",
@@ -101,11 +98,82 @@ class FornecedorController extends Controller
      */
     public function store(FornecedorRequest $request)
     {
-        $supplier = $this->supplierRepository->create($request->validated());
+        $supplier = $this->fornecedorRepository->create($request->validated());
 
         return response()->json([
             'message'  => 'Fornecedor cadastrado com sucesso!',
             'supplier' => $supplier,
         ], 201);
+    }
+
+    /**
+     * Atualiza um fornecedor existente.
+     *
+     * @OA\Put(
+     *     path="/api/fornecedor/{id}",
+     *     operationId="updateFornecedor",
+     *     tags={"Fornecedores"},
+     *     summary="Atualiza fornecedor",
+     *     description="Atualiza os dados de um fornecedor existente.",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID do fornecedor a ser atualizado",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer"
+     *         )
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         description="Dados para atualização do fornecedor",
+     *         @OA\JsonContent(ref="#/components/schemas/FornecedorRequest")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Fornecedor atualizado com sucesso",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Fornecedor atualizado com sucesso!"
+     *             ),
+     *             @OA\Property(
+     *                 property="supplier",
+     *                 ref="#/components/schemas/Fornecedor"
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Fornecedor não encontrado"
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Erro de validação"
+     *     )
+     * )
+     *
+     * @param  int  $id
+     * @param  FornecedorRequest  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function update(int $id, FornecedorRequest $request)
+    {
+        // Procura o fornecedor pelo ID
+        $supplier = $this->fornecedorRepository->find($id);
+
+        if (!$supplier) {
+            return response()->json(['message' => 'Fornecedor não encontrado'], 404);
+        }
+
+        // Atualiza o fornecedor com os dados validados
+        $supplier->update($request->validated());
+
+        return response()->json([
+            'message'  => 'Fornecedor atualizado com sucesso!',
+            'supplier' => $supplier,
+        ]);
     }
 }

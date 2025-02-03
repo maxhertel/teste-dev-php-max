@@ -29,6 +29,22 @@ interface FornecedorRepositoryInterface
      * @return Supplier|null
      */
     public function find(int $id): ?Fornecedor;
-    
-    
+
+
+    /**
+     * Atualiza um fornecedor existente.
+     *
+     * @param int $id
+     * @param array $data
+     * @return Fornecedor|null Retorna o fornecedor atualizado ou null caso não seja encontrado.
+     */
+    public function update(int $id, array $data): ?Fornecedor;
+
+    /**
+     * Exclui um fornecedor pelo ID.
+     *
+     * @param int $id
+     * @return bool Retorna true se a exclusão for bem-sucedida, false caso contrário.
+     */
+    public function delete(int $id): bool;
 }

@@ -6,7 +6,7 @@
         "version": "1.0.0"
     },
     "paths": {
-        "/api/fornecerdor": {
+        "/api/fornecedor": {
             "get": {
                 "tags": [
                     "Fornecedores"
@@ -67,6 +67,65 @@
                                 }
                             }
                         }
+                    },
+                    "422": {
+                        "description": "Erro de validação"
+                    }
+                }
+            }
+        },
+        "/api/fornecedor/{id}": {
+            "put": {
+                "tags": [
+                    "Fornecedores"
+                ],
+                "summary": "Atualiza fornecedor",
+                "description": "Atualiza os dados de um fornecedor existente.",
+                "operationId": "updateFornecedor",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do fornecedor a ser atualizado",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Dados para atualização do fornecedor",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/FornecedorRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Fornecedor atualizado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Fornecedor atualizado com sucesso!"
+                                        },
+                                        "supplier": {
+                                            "$ref": "#/components/schemas/Fornecedor"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Fornecedor não encontrado"
                     },
                     "422": {
                         "description": "Erro de validação"

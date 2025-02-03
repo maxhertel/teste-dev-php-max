@@ -9,5 +9,12 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 
-Route::get('fornecerdor', [FornecedorController::class, 'index']);
-Route::post('fornecerdor', [FornecedorController::class, 'store']);
+Route::prefix('fornecedor')->group(function () {
+    Route::get('/', [FornecedorController::class, 'index']);
+
+    Route::post('/', [FornecedorController::class, 'store']);
+
+    Route::put('/{id}', [FornecedorController::class, 'update']);
+
+    Route::delete('/{id}', [FornecedorController::class, 'destroy']);
+});
