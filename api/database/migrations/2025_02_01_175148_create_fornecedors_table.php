@@ -11,22 +11,22 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('fornecedores', function (Blueprint $table) {
+        Schema::create('fornecedors', function (Blueprint $table) {
             $table->id();
 
-            $table->string('name'); 
+            $table->string('nome'); 
             $table->string('cnpj_cpf', 20)->unique(); 
-            $table->enum('document_type', ['cpf', 'cnpj']);
+            $table->enum('tipo_documento', ['cpf', 'cnpj']);
             $table->string('email')->nullable();
-            $table->string('phone', 20)->nullable();
-            $table->string('street')->nullable();
-            $table->string('number', 10)->nullable();
-            $table->string('complement')->nullable();
-            $table->string('district')->nullable();
-            $table->string('city')->nullable();
-            $table->string('state', 2)->nullable();
-            $table->string('zip_code', 10)->nullable();
-            $table->text('obs')->nullable();
+            $table->string('telefone', 20)->nullable();
+            $table->string('rua')->nullable();
+            $table->string('numero', 10)->nullable();
+            $table->string('complemento')->nullable();
+            $table->string('bairro')->nullable();
+            $table->string('cidade')->nullable();
+            $table->string('estado', 2)->nullable();
+            $table->string('cep', 10)->nullable();
+            $table->text('observacoes')->nullable();
 
             $table->timestamps();
         });
@@ -37,6 +37,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('fornecedores');
+        Schema::dropIfExists('fornecedors');
     }
 };

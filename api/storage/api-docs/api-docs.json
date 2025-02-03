@@ -6,7 +6,7 @@
         "version": "1.0.0"
     },
     "paths": {
-        "/api/fornecedores": {
+        "/api/fornecerdor": {
             "get": {
                 "tags": [
                     "Fornecedores"
@@ -32,7 +32,7 @@
             },
             "post": {
                 "tags": [
-                    "Forncedor"
+                    "Fornecedores"
                 ],
                 "summary": "Cadastra fornecedor",
                 "description": "Cadastra um novo fornecedor utilizando os dados informados.",
@@ -231,10 +231,6 @@
         {
             "name": "Fornecedores",
             "description": "Fornecedores"
-        },
-        {
-            "name": "Forncedor",
-            "description": "Forncedor"
         }
     ]
 }

@@ -97,19 +97,19 @@ use Illuminate\Database\Eloquent\Model;
 class Fornecedor extends Model
 {
     protected $fillable = [
-        'name',
+        'nome',
         'cnpj_cpf',
-        'document_type',
+        'tipo_documento',
         'email',
-        'phone',
-        'street',
-        'number',
-        'complement',
-        'district',
-        'city',
-        'state',
-        'zip_code',
-        'obs',
+        'telefone',
+        'rua',
+        'numero',
+        'complemento',
+        'bairro',
+        'cidade',
+        'estado',
+        'cep',
+        'observacoes',
     ];
       /**
      * Boot do model para aplicar callbacks.

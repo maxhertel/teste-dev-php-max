@@ -96,7 +96,7 @@ class FornecedorRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'          => 'required|string|max:255',
+            'nome'          => 'required|string|max:255',
             'cnpj_cpf'      => [
                 'required',
                 'string',
@@ -113,17 +113,17 @@ class FornecedorRequest extends FormRequest
                     }
                 },
             ],
-            'document_type' => 'required|in:cpf,cnpj',
+            'tipo_documento' => 'required|in:cpf,cnpj',
             'email'         => 'nullable|email|max:255',
-            'phone'         => 'nullable|string|max:20',
-            'street'        => 'nullable|string|max:255',
-            'number'        => 'nullable|string|max:10',
-            'complement'    => 'nullable|string|max:255',
-            'district'      => 'nullable|string|max:255',
-            'city'          => 'nullable|string|max:255',
-            'state'         => 'nullable|string|size:2',
-            'zip_code'      => 'nullable|string|max:10',
-            'obs'         => 'nullable|string',
+            'telefone'         => 'nullable|string|max:20',
+            'rua'        => 'nullable|string|max:255',
+            'numero'        => 'nullable|string|max:10',
+            'complemento'    => 'nullable|string|max:255',
+            'bairro'      => 'nullable|string|max:255',
+            'cidade'          => 'nullable|string|max:255',
+            'estado'         => 'nullable|string|size:2',
+            'cep'      => 'nullable|string|max:10',
+            'observacoes'         => 'nullable|string',
         ];
     }
 }

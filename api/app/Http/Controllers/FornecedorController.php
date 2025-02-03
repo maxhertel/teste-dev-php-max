@@ -36,7 +36,7 @@ class FornecedorController extends Controller
      * Lista todos os fornecedores.
      *
      * @OA\Get(
-     *     path="/api/fornecedores",
+     *     path="/api/fornecerdor",
      *     operationId="getFornecedoresList",
      *     tags={"Fornecedores"},
      *     summary="Lista fornecedores",
@@ -64,9 +64,9 @@ class FornecedorController extends Controller
      * Cadastra um novo fornecedor.
      *
      * @OA\Post(
-     *     path="/api/fornecedores",
+     *     path="/api/fornecerdor",
      *     operationId="storeFornecedor",
-     *     tags={"Forncedor"},
+     *     tags={"Fornecedores"},
      *     summary="Cadastra fornecedor",
      *     description="Cadastra um novo fornecedor utilizando os dados informados.",
      *     @OA\RequestBody(
