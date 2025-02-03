@@ -12,16 +12,20 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Criar e definir o diretório de trabalho
 WORKDIR /var/www/html
 
-# Copiar o arquivo .env
+# Copiar o arquivo .env.example para .env
 COPY .env.example .env
-# Instalar dependências do Laravel
-RUN composer install --no-dev --optimize-autoloader
 
 # Copiar os arquivos do Laravel
 COPY . .
 
 # Instalar dependências do Laravel
 RUN composer install --no-dev --optimize-autoloader
+
+# Gerar a chave da aplicação
+RUN php artisan key:generate --force
+
+# Rodar as migrations
+RUN php artisan migrate --no-interaction
 
 # Definir permissões
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
