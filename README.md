@@ -61,8 +61,11 @@ docker exec -it teste_max php artisan migrate
 docker exec -it teste_max php artisan l5-swagger:generate
 
 SE der problema de permisssão só fazer o seguinte 
+
 sudo docker exec -it teste_max bash
+
 chown -R www-data:www-data storage bootstrap/cache
+
 chmod -R 777 storage bootstrap/cache
 
 Tem um sagger funcional para ajudar a testar
@@ -70,3 +73,5 @@ Tem um sagger funcional para ajudar a testar
 E tem teste de Feature e Unitario :)
 
 http://localhost:8000/api/documentation#/Fornecedores/storeFornecedor 
+
+sem docker o comandos são os mesmos não esquecer de gerar a docs
