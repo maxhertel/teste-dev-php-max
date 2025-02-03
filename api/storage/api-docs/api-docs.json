@@ -1,7 +1,7 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "API Example",
+        "title": "Api do teste do MAX :)",
         "description": "Documentação da API com Swagger para fornecedores",
         "version": "1.0.0"
     },
@@ -129,6 +129,46 @@
                     },
                     "422": {
                         "description": "Erro de validação"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Fornecedores"
+                ],
+                "summary": "Exclui fornecedor",
+                "description": "Exclui um fornecedor pelo seu ID.",
+                "operationId": "deleteFornecedor",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do fornecedor a ser excluído",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Fornecedor excluído com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Fornecedor excluído com sucesso!"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Fornecedor não encontrado ou não pôde ser excluído"
                     }
                 }
             }
@@ -289,7 +329,7 @@
     "tags": [
         {
             "name": "Fornecedores",
-            "description": "Fornecedores"
+            "description": "Endpoints para gerenciamento de fornecedores"
         }
     ]
 }

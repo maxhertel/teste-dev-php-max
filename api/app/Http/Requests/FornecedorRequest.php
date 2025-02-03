@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Models\Fornecedor;
 use Illuminate\Foundation\Http\FormRequest;
+
 /**
  * @OA\Schema(
  *     schema="FornecedorRequest",
@@ -105,11 +106,17 @@ class FornecedorRequest extends FormRequest
                 function ($attribute, $value, $fail) {
                     $value = Fornecedor::sanitizeDocument($value);
                     $documentType = $this->input('document_type');
-                    
+
                     if ($documentType === 'cpf' && !Fornecedor::isValidDocument($value, 'cpf')) {
                         $fail('O CPF informado é inválido.');
                     } elseif ($documentType === 'cnpj' && !Fornecedor::isValidDocument($value, 'cnpj')) {
                         $fail('O CNPJ informado é inválido.');
+                    }
+                    if (Fornecedor::where('cnpj_cpf', $value)
+                        ->where('id', '!=', request()->route('fornecedor'))
+                        ->exists()
+                    ) {
+                        $fail('O documento informado já está cadastrado.');
                     }
                 },
             ],

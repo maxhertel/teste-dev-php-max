@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\FornecedorRequest;
+use App\Jobs\ProcessarNovoRegistro;
 use App\Repositories\FornecedorRepositoryInterface;
 use Illuminate\Support\Facades\Request;
 
@@ -98,11 +99,14 @@ class FornecedorController extends Controller
      */
     public function store(FornecedorRequest $request)
     {
-        $supplier = $this->fornecedorRepository->create($request->validated());
+        $fornecedor = $this->fornecedorRepository->create($request->validated());
+
+        // Despacha o job para processar o fornecedor imediatamente:
+        ProcessarNovoRegistro::dispatch($fornecedor);
 
         return response()->json([
             'message'  => 'Fornecedor cadastrado com sucesso!',
-            'supplier' => $supplier,
+            'supplier' => $fornecedor,
         ], 201);
     }
 
@@ -175,5 +179,55 @@ class FornecedorController extends Controller
             'message'  => 'Fornecedor atualizado com sucesso!',
             'supplier' => $supplier,
         ]);
+    }
+
+    /**
+     * Exclui um fornecedor existente.
+     *
+     * @OA\Delete(
+     *     path="/api/fornecedor/{id}",
+     *     operationId="deleteFornecedor",
+     *     tags={"Fornecedores"},
+     *     summary="Exclui fornecedor",
+     *     description="Exclui um fornecedor pelo seu ID.",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID do fornecedor a ser excluído",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Fornecedor excluído com sucesso",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Fornecedor excluído com sucesso!"
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Fornecedor não encontrado ou não pôde ser excluído"
+     *     )
+     * )
+     *
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function destroy(int $id)
+    {
+        $deleted = $this->fornecedorRepository->delete($id);
+
+        if (!$deleted) {
+            return response()->json(['message' => 'Fornecedor não encontrado ou não pôde ser excluído'], 404);
+        }
+
+        return response()->json(['message' => 'Fornecedor excluído com sucesso!']);
     }
 }
