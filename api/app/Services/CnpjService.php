@@ -22,4 +22,24 @@ class CnpjService{
 
         return $response;
     }
+
+    public static function consultarBrasilCnpj($cnpj) {
+        $url = "https://brasilapi.com.br/api/cnpj/v1/" . $cnpj;
+    
+        $curl = curl_init($url);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+    
+        $response = curl_exec($curl);
+        $error = curl_error($curl);
+    
+        curl_close($curl);
+    
+        if ($error) {
+            return ['error' => 'Erro ao consultar API: ' . $error];
+        }
+    
+        return json_decode($response, true);
+    }
+    
 }

@@ -11,4 +11,7 @@ Route::prefix('fornecedor')->group(function () {
     Route::put('/{id}', [FornecedorController::class, 'update']);
 
     Route::delete('/{id}', [FornecedorController::class, 'destroy']);
+
+    Route::get('/{id}/consultar-cnpj-externo', [FornecedorController::class, 'consultarCnpj']);
+
 });

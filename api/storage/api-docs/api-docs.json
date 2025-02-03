@@ -172,6 +172,78 @@
                     }
                 }
             }
+        },
+        "/api/fornecedor/{id}/consultar-cnpj-externo": {
+            "get": {
+                "tags": [
+                    "Fornecedores"
+                ],
+                "summary": "Consulta CNPJ de um fornecedor na BrasilAPI",
+                "description": "Retorna os dados do CNPJ consultado na BrasilAPI para o fornecedor correspondente ao ID informado.",
+                "operationId": "121eac7d167426db66ef1e77ff11944a",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do fornecedor no sistema",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Dados do CNPJ consultado na BrasilAPI",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "cnpj": "11444777000161",
+                                    "razao_social": "EMPRESA EXEMPLO LTDA",
+                                    "nome_fantasia": "EMPRESA EXEMPLO",
+                                    "situacao_cadastral": "ATIVA",
+                                    "data_abertura": "2000-01-01",
+                                    "natureza_juridica": "Sociedade Empresária Limitada",
+                                    "atividade_principal": {
+                                        "code": "6201-5/01",
+                                        "text": "Desenvolvimento de software sob encomenda"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Erro: O fornecedor não possui um CNPJ válido",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "error": "O fornecedor não possui um CNPJ válido"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Erro: Fornecedor não encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "error": "Fornecedor não encontrado"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {

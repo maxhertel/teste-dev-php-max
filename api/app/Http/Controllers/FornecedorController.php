@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\FornecedorRequest;
 use App\Jobs\ProcessarNovoRegistro;
+use App\Repositories\FornecedorRepository;
 use App\Repositories\FornecedorRepositoryInterface;
+use App\Services\CnpjService;
 use Illuminate\Support\Facades\Request;
 
 /**
@@ -229,5 +231,76 @@ class FornecedorController extends Controller
         }
 
         return response()->json(['message' => 'Fornecedor excluído com sucesso!']);
+    }
+
+    /**
+     * @OA\Get(
+     *     path="/api/fornecedor/{id}/consultar-cnpj-externo",
+     *     summary="Consulta CNPJ de um fornecedor na BrasilAPI",
+     *     description="Retorna os dados do CNPJ consultado na BrasilAPI para o fornecedor correspondente ao ID informado.",
+     *     tags={"Fornecedores"},
+     * 
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="ID do fornecedor no sistema",
+     *         @OA\Schema(type="integer", example=1)
+     *     ),
+     * 
+     *     @OA\Response(
+     *         response=200,
+     *         description="Dados do CNPJ consultado na BrasilAPI",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             example={
+     *                 "cnpj": "11444777000161",
+     *                 "razao_social": "EMPRESA EXEMPLO LTDA",
+     *                 "nome_fantasia": "EMPRESA EXEMPLO",
+     *                 "situacao_cadastral": "ATIVA",
+     *                 "data_abertura": "2000-01-01",
+     *                 "natureza_juridica": "Sociedade Empresária Limitada",
+     *                 "atividade_principal": {
+     *                     "code": "6201-5/01",
+     *                     "text": "Desenvolvimento de software sob encomenda"
+     *                 }
+     *             }
+     *         )
+     *     ),
+     * 
+     *     @OA\Response(
+     *         response=400,
+     *         description="Erro: O fornecedor não possui um CNPJ válido",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             example={"error": "O fornecedor não possui um CNPJ válido"}
+     *         )
+     *     ),
+     * 
+     *     @OA\Response(
+     *         response=404,
+     *         description="Erro: Fornecedor não encontrado",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             example={"error": "Fornecedor não encontrado"}
+     *         )
+     *     )
+     * )
+     */
+    public function consultarCnpj($id)
+    {
+        $fornecedor = $this->fornecedorRepository->find($id);
+
+        if (!$fornecedor) {
+            return response()->json(['error' => 'Fornecedor não encontrado'], 404);
+        }
+
+        if (!$fornecedor->cnpj_cpf || $fornecedor->tipo_documento !== 'cnpj') {
+            return response()->json(['error' => 'O fornecedor não possui um CNPJ válido'], 400);
+        }
+
+        $dados = CnpjService::consultarBrasilCnpj($fornecedor->cnpj_cpf);
+
+        return response()->json($dados);
     }
 }
