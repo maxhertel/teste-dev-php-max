@@ -24,8 +24,6 @@ RUN composer install --no-dev --optimize-autoloader
 # Gerar a chave da aplicação
 RUN php artisan key:generate --force
 
-# Rodar as migrations
-RUN php artisan migrate --no-interaction
 
 # Definir permissões
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
