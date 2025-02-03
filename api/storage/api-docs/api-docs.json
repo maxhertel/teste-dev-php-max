@@ -1,0 +1,240 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API Example",
+        "description": "Documentação da API com Swagger para fornecedores",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/fornecedores": {
+            "get": {
+                "tags": [
+                    "Fornecedores"
+                ],
+                "summary": "Lista fornecedores",
+                "description": "Retorna uma lista de todos os fornecedores cadastrados.",
+                "operationId": "getFornecedoresList",
+                "responses": {
+                    "200": {
+                        "description": "Operação realizada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Fornecedor"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Forncedor"
+                ],
+                "summary": "Cadastra fornecedor",
+                "description": "Cadastra um novo fornecedor utilizando os dados informados.",
+                "operationId": "storeFornecedor",
+                "requestBody": {
+                    "description": "Dados do fornecedor",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/FornecedorRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Fornecedor cadastrado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Fornecedor cadastrado com sucesso!"
+                                        },
+                                        "supplier": {
+                                            "$ref": "#/components/schemas/Fornecedor"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Erro de validação"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "FornecedorRequest": {
+                "title": "FornecedorRequest",
+                "required": [
+                    "nome",
+                    "cnpj_cpf",
+                    "tipo_documento"
+                ],
+                "properties": {
+                    "nome": {
+                        "type": "string",
+                        "example": "Fornecedor Exemplo"
+                    },
+                    "cnpj_cpf": {
+                        "type": "string",
+                        "example": "12345678901234"
+                    },
+                    "tipo_documento": {
+                        "type": "string",
+                        "enum": [
+                            "cpf",
+                            "cnpj"
+                        ],
+                        "example": "cnpj"
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "contato@fornecedor.com"
+                    },
+                    "telefone": {
+                        "type": "string",
+                        "example": "(11) 99999-9999"
+                    },
+                    "rua": {
+                        "type": "string",
+                        "example": "Rua Exemplo"
+                    },
+                    "numero": {
+                        "type": "string",
+                        "example": "100"
+                    },
+                    "complemento": {
+                        "type": "string",
+                        "example": "Apto 101"
+                    },
+                    "bairro": {
+                        "type": "string",
+                        "example": "Centro"
+                    },
+                    "cidade": {
+                        "type": "string",
+                        "example": "São Paulo"
+                    },
+                    "estado": {
+                        "type": "string",
+                        "example": "SP"
+                    },
+                    "cep": {
+                        "type": "string",
+                        "example": "01000-000"
+                    },
+                    "observacoes": {
+                        "type": "string",
+                        "example": "Observações sobre o fornecedor."
+                    }
+                },
+                "type": "object"
+            },
+            "Fornecedor": {
+                "title": "Fornecedor",
+                "required": [
+                    "nome",
+                    "cnpj_cpf",
+                    "tipo_documento"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "nome": {
+                        "type": "string",
+                        "example": "Fornecedor Exemplo"
+                    },
+                    "cnpj_cpf": {
+                        "type": "string",
+                        "example": "12345678901234"
+                    },
+                    "tipo_documento": {
+                        "type": "string",
+                        "enum": [
+                            "cpf",
+                            "cnpj"
+                        ],
+                        "example": "cnpj"
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "contato@fornecedor.com"
+                    },
+                    "telefone": {
+                        "type": "string",
+                        "example": "(11) 99999-9999"
+                    },
+                    "rua": {
+                        "type": "string",
+                        "example": "Rua Exemplo"
+                    },
+                    "numero": {
+                        "type": "string",
+                        "example": "100"
+                    },
+                    "complemento": {
+                        "type": "string",
+                        "example": "Apto 101"
+                    },
+                    "bairro": {
+                        "type": "string",
+                        "example": "Centro"
+                    },
+                    "cidade": {
+                        "type": "string",
+                        "example": "São Paulo"
+                    },
+                    "estado": {
+                        "type": "string",
+                        "example": "SP"
+                    },
+                    "cep": {
+                        "type": "string",
+                        "example": "01000-000"
+                    },
+                    "observacoes": {
+                        "type": "string",
+                        "example": "Observações sobre o fornecedor."
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-02-01T00:00:00Z"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-02-01T00:00:00Z"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Fornecedores",
+            "description": "Fornecedores"
+        },
+        {
+            "name": "Forncedor",
+            "description": "Forncedor"
+        }
+    ]
+}

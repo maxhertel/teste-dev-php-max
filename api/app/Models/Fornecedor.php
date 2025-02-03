@@ -3,7 +3,97 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
+/**
+ * @OA\Schema(
+ *     schema="Fornecedor",
+ *     type="object",
+ *     title="Fornecedor",
+ *     required={"nome", "cnpj_cpf", "tipo_documento"},
+ *     @OA\Property(
+ *         property="id",
+ *         type="integer",
+ *         example=1
+ *     ),
+ *     @OA\Property(
+ *         property="nome",
+ *         type="string",
+ *         example="Fornecedor Exemplo"
+ *     ),
+ *     @OA\Property(
+ *         property="cnpj_cpf",
+ *         type="string",
+ *         example="12345678901234"
+ *     ),
+ *     @OA\Property(
+ *         property="tipo_documento",
+ *         type="string",
+ *         enum={"cpf", "cnpj"},
+ *         example="cnpj"
+ *     ),
+ *     @OA\Property(
+ *         property="email",
+ *         type="string",
+ *         example="contato@fornecedor.com"
+ *     ),
+ *     @OA\Property(
+ *         property="telefone",
+ *         type="string",
+ *         example="(11) 99999-9999"
+ *     ),
+ *     @OA\Property(
+ *         property="rua",
+ *         type="string",
+ *         example="Rua Exemplo"
+ *     ),
+ *     @OA\Property(
+ *         property="numero",
+ *         type="string",
+ *         example="100"
+ *     ),
+ *     @OA\Property(
+ *         property="complemento",
+ *         type="string",
+ *         example="Apto 101"
+ *     ),
+ *     @OA\Property(
+ *         property="bairro",
+ *         type="string",
+ *         example="Centro"
+ *     ),
+ *     @OA\Property(
+ *         property="cidade",
+ *         type="string",
+ *         example="São Paulo"
+ *     ),
+ *     @OA\Property(
+ *         property="estado",
+ *         type="string",
+ *         example="SP"
+ *     ),
+ *     @OA\Property(
+ *         property="cep",
+ *         type="string",
+ *         example="01000-000"
+ *     ),
+ *     @OA\Property(
+ *         property="observacoes",
+ *         type="string",
+ *         example="Observações sobre o fornecedor."
+ *     ),
+ *     @OA\Property(
+ *         property="created_at",
+ *         type="string",
+ *         format="date-time",
+ *         example="2025-02-01T00:00:00Z"
+ *     ),
+ *     @OA\Property(
+ *         property="updated_at",
+ *         type="string",
+ *         format="date-time",
+ *         example="2025-02-01T00:00:00Z"
+ *     )
+ * )
+ */
 class Fornecedor extends Model
 {
     protected $fillable = [
